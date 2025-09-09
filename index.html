@@ -1,0 +1,449 @@
+<html>
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Rules Of Relationship Table</title>
+<style>
+  /* Title Styles */
+  .title-container {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+    padding: 20px 0;
+  }
+  
+  .main-title {
+    color: white;
+    font-size: 2.5em;
+    font-weight: bold;
+    text-shadow: 0 0 10px cyan, 0 0 20px magenta, 0 0 30px red;
+    margin: 0;
+    letter-spacing: 2px;
+    animation: textGlow 2s ease infinite;
+  }
+  
+  .subtitle {
+    color: #ff9e9e;
+    font-size: 1.2em;
+    margin-top: 10px;
+    text-shadow: 0 0 5px #ff6b6b;
+    animation: subtitleGlow 2s ease infinite;
+  }
+  
+  .subtitle p {
+    margin: 5px 0;
+  }
+  
+  /* Content Styles */
+  .content-container {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 150px);
+    padding: 0 20px 20px 20px;
+  }
+  
+  .content-section {
+    background-color: rgba(0, 0, 0, 0.7);
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+    overflow-y: auto;
+  }
+  
+  .upper-left-text {
+    position: absolute;
+    top: 100px;
+    left: 30px;
+    color: white;
+    font-size: 2em;
+    font-weight: bold;
+    text-shadow: 0 0 10px cyan, 0 0 20px magenta, 0 0 30px red;
+    z-index: 10;
+  }
+  
+  h2 {
+    color: white;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #424242;
+    text-align: center;
+    animation: textGlow 2s ease infinite;
+  }
+  
+  /* Flexbox Grid Styles */
+  .grid-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 15px;
+  }
+  
+  .grid-item {
+    flex-basis: calc(25% - 15px);
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 5px;
+    padding: 15px;
+    margin-bottom: 15px;
+    box-sizing: border-box;
+    animation: textGlow 2s ease infinite;
+    transition: text-shadow 0.3s ease, transform 0.3s ease;
+  }
+  
+  .grid-item:hover {
+    text-shadow: 0 0 15px cyan, 0 0 25px magenta, 0 0 35px red;
+    transform: scale(1.02);
+    cursor: pointer;
+  }
+  
+  .grid-item a {
+    color: white;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    font-size: 1em;
+  }
+  
+  .number {
+    display: inline-block;
+    width: 28px;
+    height: 28px;
+    background-color: #333;
+    color: white;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 28px;
+    margin-right: 10px;
+    font-weight: bold;
+    flex-shrink: 0;
+  }
+  
+  /* Background Animation Styles */
+  body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+    background-color: black;
+    position: relative;
+    font-family: Arial, sans-serif;
+  }
+  
+  .background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('1.jpeg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    transition: opacity 1s ease;
+    opacity: 1;
+    z-index: 1;
+  }
+  
+  .gradient-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 0, 255, 0.4);
+    animation: bodyGradient 10s infinite linear;
+    z-index: 2;
+  }
+  
+  .border {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    border: 10px solid transparent;
+    border-image-slice: 1;
+    border-image-source: linear-gradient(45deg, magenta, deeppink, red, purple);
+    border-image-repeat: stretch;
+    margin: 0;
+    animation: borderPulse 10s infinite linear;
+    z-index: 3;
+  }
+  
+  /* Continuous neon glow animation for paragraphs */
+  .neon-paragraph {
+    color: white;
+    font-size: 1.1em;
+    line-height: 1.6;
+    margin: 20px 0;
+    animation: paragraphGlow 2s ease-in-out infinite;
+  }
+  
+  @keyframes paragraphGlow {
+    0% { text-shadow: 0 0 5px cyan, 0 0 10px cyan, 0 0 15px cyan; }
+    33% { text-shadow: 0 0 5px magenta, 0 0 10px magenta, 0 0 15px magenta; }
+    66% { text-shadow: 0 0 5px red, 0 0 10px red, 0 0 15px red; }
+    100% { text-shadow: 0 0 5px cyan, 0 0 10px cyan, 0 0 15px cyan; }
+  }
+  
+  @keyframes textGlow {
+    0% { text-shadow: 0 0 5px cyan, 0 0 10px cyan, 0 0 15px cyan; }
+    33% { text-shadow: 0 0 5px magenta, 0 0 10px magenta, 0 0 15px magenta; }
+    66% { text-shadow: 0 0 5px red, 0 0 10px red, 0 0 15px red; }
+    100% { text-shadow: 0 0 5px cyan, 0 0 10px cyan, 0 0 15px cyan; }
+  }
+  
+  @keyframes subtitleGlow {
+    0% { text-shadow: 0 0 5px cyan, 0 0 10px cyan, 0 0 15px cyan; }
+    50% { text-shadow: 0 0 5px magenta, 0 0 10px magenta, 0 0 15px magenta; }
+    100% { text-shadow: 0 0 5px cyan, 0 0 10px cyan, 0 0 15px cyan; }
+  }
+  
+  @keyframes bodyGradient {
+    0% { background: rgba(255, 0, 255, 0.4); }
+    8.33% { background: rgba(255, 127, 0, 0.4); }
+    16.66% { background: rgba(255, 255, 0, 0.4); }
+    25% { background: rgba(127, 255, 0, 0.4); }
+    33.33% { background: rgba(0, 255, 127, 0.4); }
+    41.66% { background: rgba(0, 255, 255, 0.4); }
+    50% { background: rgba(0, 127, 255, 0.4); }
+    58.33% { background: rgba(0, 0, 255, 0.4); }
+    66.66%{ background: rgba(127, 0, 255, 0.4); }
+    75% { background: rgba(255, 0, 255, 0.4); }
+    83.33% { background: rgba(255, 0, 127, 0.4); }
+    91.66% { background: rgba(255, 127, 0, 0.4); }
+    100% { background: rgba(255, 0, 255, 0.4); }
+  }
+  
+  @keyframes borderPulse {
+    0% { border-color: rgba(255, 0, 255, 0.8); }
+    8.33% { border-color: rgba(255, 127, 0, 0.8); }
+    16.66% { border-color: rgba(255, 255, 0, 0.8); }
+    25% { border-color: rgba(127, 255, 0, 0.8); }
+    33.33% { border-color: rgba(0, 255, 127, 0.8); }
+    41.66% { border-color: rgba(0, 255, 255, 0.8); }
+    50% { border-color: rgba(0, 127, 255, 0.8); }
+    58.33% { border-color: rgba(0, 0, 255, 0.8); }
+    66.66%{ border-color: rgba(127, 0, 255, 0.8); }
+    75% { border-color: rgba(255, 0, 255, 0.8); }
+    83.33% { border-color: rgba(255, 0, 127, 0.8); }
+    91.66% { border-color: rgba(255, 127, 0, 0.8); }
+    100% { border-color: rgba(255, 0, 255, 0.8); }
+  }
+</style>
+</head>
+<body>
+  <!-- Background Animation -->
+  <div class="background"></div>
+  <div class="gradient-overlay"></div>
+  <div class="border"></div>
+  
+  <!-- Title at Top Center with Continuous Glow Animation -->
+  <div class="title-container">
+    <h1 class="main-title">Rules Of Relationship Table 3</h1>
+    <h3 class="subtitle">
+      <p>Bakit hindi nako papayag sa monogamy at bigamy dahil adultery na ito sa panahon ngayon concubinage na dapat kami kasi tamang tao ito na mahirap hanapin!!! so payag nako sa 1-100 girlfriends POLYGAMY STATE OF VIEWS</p>
+    </h3>
+  </div>
+  
+  <!-- Content Container -->
+  <div class="content-container">
+    <!-- Main Content Section -->
+    <div class="content-section">
+      <h2>Rules Of Relationship Table</h2>
+      
+      <div class="grid-container">
+        <!-- Row 1 -->
+        <div class="grid-item">
+          <a href="https://ragesband2.github.io/July-27-2025-Maling-Tao-Vs-Tamang-Tao-Neon-Animation-Success/" target="_blank">
+            <span class="number">1</span>
+            Maling Tao Vs Tamang Tao Neon Animation Success
+          </a>
+        </div>
+        <div class="grid-item">
+          <a href="https://ragesband2.github.io/July-27-2025-Maling-Tao-Vs-Tamang-Tao-Part-2/" target="_blank">
+            <span class="number">2</span>
+            Maling Tao Vs Tamang Tao Part 2
+          </a>
+        </div>
+        <div class="grid-item">
+          <a href="https://ragesband2.github.io/July-27-2025-Mga-Ayaw-Ko-Sa-Isang-Babae-1-17-Rules-In-10-Years/" target="_blank">
+            <span class="number">3</span>
+            Mga Ayaw Ko Sa Isang Babae 1-17 Rules In 10 Years
+          </a>
+        </div>
+        <div class="grid-item">
+          <a href="https://ragesband2.github.io/July-27-2025-Ipatupad-Ang-Polygamy-Law-100-Jowas-No-Ex-Axis-Mono-To-Bigamy/" target="_blank">
+            <span class="number">4</span>
+            Ipatupad Ang Polygamy Law 100 Jowas No Ex Axis Mono To Bigamy
+          </a>
+        </div>
+        
+        <!-- Row 2 -->
+        <div class="grid-item">
+          <a href="https://ragesband2.github.io/August-5-2025-Paano-Magmove-On-Sa-Nakaraang-Relasyon/" target="_blank">
+            <span class="number">5</span>
+            Paano Magmove On Sa Nakaraang Relasyon
+          </a>
+        </div>
+        <div class="grid-item">
+          <a href="https://ragesband2.github.io/August-10-2025-Paano-Magmove-On-Sa-Dalawang-Heartbreaks-Na-Ex-Monogamy-At-Ex-Bigamy/" target="_blank">
+            <span class="number">6</span>
+            Paano Magmove On Sa Dalawang Heartbreaks Na Ex Monogamy At Ex Bigamy
+          </a>
+        </div>
+        <div class="grid-item">
+          <a href="https://ragesband2.github.io/August-10-2025-Polygamy-Rule-Of-Thirds/" target="_blank">
+            <span class="number">7</span>
+            Polygamy Rule Of Thirds
+          </a>
+        </div>
+        <div class="grid-item">
+          <a href="https://ragesband2.github.io/August-10-2025-Sa-Starting-Day-Ng-Klase-Ko-Para-Sa-Ex-Ko/" target="_blank">
+            <span class="number">8</span>
+            Sa Starting Day Ng Klase Ko Para Sa Ex Ko
+          </a>
+        </div>
+        
+        <!-- New Links Added Here -->
+        <div class="grid-item">
+          <a href="https://ragesband2.github.io/September-9-2025-RED-FLAGS-VS-GREEN-FLAGS-PART-3/" target="_blank">
+            <span class="number">9</span>
+            RED FLAGS VS GREEN FLAGS PART 3
+          </a>
+        </div>
+        <div class="grid-item">
+          <a href="https://ragesband2.github.io/September-9-2025-RED-FLAGS-VS-GREEN-FLAGS-PART-4/" target="_blank">
+            <span class="number">10</span>
+            RED FLAGS VS GREEN FLAGS sa Relasyon 4
+          </a>
+        </div>
+        <div class="grid-item">
+          <a href="https://ragesband2.github.io/September-9-2025-Red-Flags-vs-Green-Flags-Coverage/" target="_blank">
+            <span class="number">11</span>
+            RED FLAGS VS GREEN FLAGS Coverage
+          </a>
+        </div>
+        <div class="grid-item">
+          <a href="https://ragesband2.github.io/September-9-2025-Red-Flags-vs-Green-Flags-sa-Relasyon/" target="_blank">
+            <span class="number">12</span>
+            RED FLAGS VS GREEN FLAGS sa Relasyon
+          </a>
+        </div>
+        <div class="grid-item">
+          <a href="https://ragesband2.github.io/September-9-2025-Red-Flags-vs-Green-Flags-2/" target="_blank">
+            <span class="number">13</span>
+            RED FLAGS VS GREEN FLAGS 2
+          </a>
+        </div>
+        <div class="grid-item">
+          <a href="https://ragesband2.github.io/September-9-2025-Red-Flags-vs-Green-Flags-3/" target="_blank">
+            <span class="number">14</span>
+            RED FLAGS VS GREEN FLAGS 3
+          </a>
+        </div>
+        <div class="grid-item">
+          <a href="https://ragesband2.github.io/September-9-2025-Red-Flags-vs-Green-Flags-4/" target="_blank">
+            <span class="number">15</span>
+            RED FLAGS VS GREEN FLAGS 4
+          </a>
+        </div>
+        <div class="grid-item">
+          <a href="https://ragesband2.github.io/September-9-2025-Red-Flags-vs-Green-Flags-5/" target="_blank">
+            <span class="number">16</span>
+            RED FLAGS VS GREEN FLAGS 5   
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    // Voice narration functionality
+    const voices = window.speechSynthesis.getVoices();
+    let utterance = null;
+    
+    // Function to speak the link text
+    function speakLinkText(linkElement) {
+      // Cancel any ongoing speech
+      if (utterance && window.speechSynthesis.speaking) {
+        window.speechSynthesis.cancel();
+      }
+      
+      // Create new utterance with the link text
+      utterance = new SpeechSynthesisUtterance(linkElement.textContent);
+      
+      // Configure voice settings
+      utterance.rate = 0.8;
+      utterance.pitch = 1.0;
+      utterance.volume = 1.0;
+      
+      // Find and set Filipino voice if available
+      const filipinoVoice = voices.find(voice => 
+        voice.lang.includes('fil') || voice.name.toLowerCase().includes('filipino')
+      );
+      
+      if (filipinoVoice) {
+        utterance.voice = filipinoVoice;
+      } else {
+        // Use default voice if Filipino not found
+        utterance.voice = voices[0];
+      }
+      
+      // Speak the text
+      window.speechSynthesis.speak(utterance);
+    }
+    
+    // Add click event listeners to all grid items
+    document.querySelectorAll('.grid-item').forEach(item => {
+      item.addEventListener('click', function(e) {
+        e.preventDefault(); // Prevent default link behavior
+        
+        // Get the link element inside the grid item
+        const link = this.querySelector('a');
+        
+        // First, speak the link text
+        speakLinkText(link);
+        
+        // After speaking, navigate to the link
+        setTimeout(() => {
+          window.location.href = link.href;
+        }, 500); // Wait half a second before navigating
+      });
+    });
+    
+    // Initialize voices list
+    window.speechSynthesis.onvoiceschanged = () => {
+      // Voices are loaded, you could update UI or perform other actions here
+    };
+    
+    // Image changing script
+    const background = document.querySelector('.background');
+    const totalImages = 13; 
+    let index = 1;
+    let isChanging = false;
+    
+    function changeImages() {
+      if (isChanging) return;
+      isChanging = true;
+      
+      background.style.transition = 'opacity 1s ease';
+      background.style.opacity = 0;
+      
+      setTimeout(() => {
+        background.style.backgroundImage = `url('${index}.jpeg')`;
+        background.style.opacity = 1;
+        
+        index = (index % totalImages) + 1;
+        
+        isChanging = false;
+      }, 1000);
+    }
+    
+    setInterval(changeImages, 4000);
+  </script>
+</body>
+</html>
